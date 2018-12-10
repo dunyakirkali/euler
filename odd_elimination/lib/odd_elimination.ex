@@ -36,6 +36,12 @@ defmodule OddElimination do
     |> rem(987_654_321)
   end
 
+  def pmap(collection, func) do
+    collection
+    |> Enum.map(&(Task.async(fn -> func.(&1) end)))
+    |> Enum.map(&Task.await/1)
+  end
+
   @doc """
   Let S(n)=∑k=1..n P(k).
 
@@ -47,7 +53,8 @@ defmodule OddElimination do
   """
   def s(n) do
     1..n
-    |> Stream.map(fn x ->
+    |> IO.inspect(label: "s")
+    |> pmap(fn x ->
       p(x)
     end)
     |> Enum.to_list
@@ -71,6 +78,7 @@ defmodule OddElimination do
   """
   def p(n) when is_integer(n) do
     1..n
+    |> IO.inspect(label: "p")
     |> Enum.to_list
     |> p()
   end
