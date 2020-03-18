@@ -22,7 +22,7 @@ defmodule OddElimination do
   """
 
   @doc """
-  Find S(1018) mod 987654321.
+  Find S(10^18) mod 987654321.
 
   ## Examples
 
